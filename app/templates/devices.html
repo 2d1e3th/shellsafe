@@ -1,0 +1,213 @@
+{% extends "dashboard_base.html" %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <!-- Header -->
+    <div class="mb-4">
+        <h2 class="h4 fw-bold mb-1" style="color: #1a4f76;">Devices Monitoring Page</h2>
+        <p class="text-muted small">Real-Time Coastal IoT Device & Sensor Status</p>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-3 col-sm-6">
+            <div class="card h-100 shadow-sm border-0" style="border-radius: 1rem;">
+                <div class="card-body p-3">
+                    <h6 class="text-muted small mb-3">Total Devices</h6>
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-broadcast fs-3 text-primary me-2"></i>
+                        <h4 class="mb-0 fw-bold">1 Active Device</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="card h-100 shadow-sm border-0" style="border-radius: 1rem;">
+                <div class="card-body p-3">
+                    <h6 class="text-muted small mb-3">Online Devices</h6>
+                    <div class="d-flex align-items-center">
+                        <div class="rounded-circle bg-success me-2" style="width: 24px; height: 24px;"></div>
+                        <h4 class="mb-0 fw-bold">1 Online</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="card h-100 shadow-sm border-0" style="border-radius: 1rem;">
+                <div class="card-body p-3">
+                    <h6 class="text-muted small mb-3">Low Battery Devices</h6>
+                    <div class="d-flex align-items-center">
+                        <div class="rounded-circle bg-warning me-2" style="width: 24px; height: 24px;"></div>
+                        <h4 class="mb-0 fw-bold">0 Low</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="card h-100 shadow-sm border-0" style="border-radius: 1rem;">
+                <div class="card-body p-3">
+                    <h6 class="text-muted small mb-3">Signal Strength</h6>
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-bar-chart-fill fs-3 text-success me-2"></i>
+                        <h4 class="mb-0 fw-bold text-success">Excellent - 85%</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Device Details -->
+    <div class="row g-3 mb-4">
+        <!-- Device Health Card -->
+        <div class="col-lg-6">
+            <div class="card h-100 shadow-sm border-0" style="border-radius: 1rem;">
+                <div class="card-body p-4 position-relative">
+                    <h6 class="text-muted small mb-4">Device Health Card</h6>
+                    <h3 class="fw-bold mb-2">Device SH-001</h3>
+                    <span class="badge bg-success bg-opacity-25 text-success rounded-pill px-3 py-2 mb-4 d-inline-flex align-items-center">
+                        <span class="rounded-circle bg-success me-2" style="width: 8px; height: 8px;"></span> ONLINE
+                    </span>
+                    
+                    <div class="position-absolute" style="top: 2rem; right: 2rem;">
+                        <div class="bg-primary bg-opacity-10 rounded text-primary d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                            <i class="bi bi-router fs-2"></i>
+                        </div>
+                    </div>
+
+                    <div class="d-flex flex-column mt-3 gap-2 text-dark">
+                        <div class="d-flex justify-content-between">
+                            <span class="text-muted">Status:</span>
+                            <span class="fw-bold"></span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span class="text-muted">Battery:</span>
+                            <span class="fw-bold">87%</span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span class="text-muted">Signal:</span>
+                            <span class="fw-bold">Strong (4G LTE)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Battery & Signal Row -->
+        <div class="col-lg-6">
+            <div class="row g-3 h-100">
+                <!-- Battery Monitoring -->
+                <div class="col-sm-12 col-md-6 h-100">
+                    <div class="card h-100 shadow-sm border-0 text-center d-flex flex-column" style="border-radius: 1rem;">
+                        <div class="card-body p-4 d-flex flex-column align-items-center justify-content-center">
+                            <h6 class="text-muted small w-100 text-start mb-3">Battery Monitoring Section</h6>
+                            <i class="bi bi-battery-half fs-1 text-success mb-3" style="transform: rotate(-90deg); display: inline-block;"></i>
+                            <h5 class="fw-bold text-success mb-1">Battery Level: 87%</h5>
+                            <p class="text-muted small mb-0">Condition: Normal</p>
+                            <p class="text-muted small mb-0">Estimated: 12 Hrs Left</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Signal Strength -->
+                <div class="col-sm-12 col-md-6 h-100">
+                    <div class="card h-100 shadow-sm border-0 text-center d-flex flex-column" style="border-radius: 1rem;">
+                        <div class="card-body p-4 d-flex flex-column align-items-center justify-content-center">
+                            <h6 class="text-muted small w-100 text-start mb-3">Signal Strength Section</h6>
+                            <i class="bi bi-bar-chart-fill fs-1 text-success mb-3"></i>
+                            <h5 class="fw-bold text-success mb-1">Cellular Signal: 85%</h5>
+                            <p class="text-muted small mb-0">Status: Excellent</p>
+                            <p class="text-muted small mb-0">Band: 4G LTE B12</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tables Row -->
+    <div class="row g-3">
+        <!-- Sensor Status -->
+        <div class="col-lg-6">
+            <div class="card h-100 shadow-sm border-0" style="border-radius: 1rem;">
+                <div class="card-body p-4">
+                    <h6 class="text-muted small mb-3">Sensor Status Monitoring Table</h6>
+                    <div class="table-responsive">
+                        <table class="table table-borderless table-hover align-middle mb-3">
+                            <thead style="background-color: #f0f7fb; border-radius: 0.5rem;">
+                                <tr>
+                                    <th class="py-2 rounded-start ps-3 text-muted small fw-bold">Sensor</th>
+                                    <th class="py-2 text-muted small fw-bold">Status</th>
+                                    <th class="py-2 rounded-end text-muted small fw-bold">Current Reading</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="ps-3 border-bottom">Temperature Sensor</td>
+                                    <td class="border-bottom"><span class="d-flex align-items-center"><span class="rounded-circle bg-success me-2" style="width: 8px; height: 8px;"></span> Active</span></td>
+                                    <td class="border-bottom">26.2°C</td>
+                                </tr>
+                                <tr>
+                                    <td class="ps-3 border-bottom">pH Sensor</td>
+                                    <td class="border-bottom"><span class="d-flex align-items-center"><span class="rounded-circle bg-success me-2" style="width: 8px; height: 8px;"></span> Active</span></td>
+                                    <td class="border-bottom">7.4</td>
+                                </tr>
+                                <tr>
+                                    <td class="ps-3 border-bottom">Dissolved Oxygen Sensor</td>
+                                    <td class="border-bottom"><span class="d-flex align-items-center"><span class="rounded-circle bg-success me-2" style="width: 8px; height: 8px;"></span> Active</span></td>
+                                    <td class="border-bottom">6.5 mg/L</td>
+                                </tr>
+                                <tr>
+                                    <td class="ps-3 border-bottom">Salinity Sensor</td>
+                                    <td class="border-bottom"><span class="d-flex align-items-center"><span class="rounded-circle bg-success me-2" style="width: 8px; height: 8px;"></span> Active</span></td>
+                                    <td class="border-bottom">32 ppt</td>
+                                </tr>
+                                <tr>
+                                    <td class="ps-3">Turbidity Sensor</td>
+                                    <td><span class="d-flex align-items-center"><span class="rounded-circle bg-success me-2" style="width: 8px; height: 8px;"></span> Active</span></td>
+                                    <td>21 NTU</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="d-flex gap-3 small fw-bold pt-2 mt-2 border-top">
+                        <span class="d-flex align-items-center"><span class="rounded-circle bg-success me-2" style="width: 8px; height: 8px;"></span> Active</span>
+                        <span class="d-flex align-items-center"><span class="rounded-circle bg-warning me-2" style="width: 8px; height: 8px;"></span> Maintenance Needed</span>
+                        <span class="d-flex align-items-center"><span class="rounded-circle bg-danger me-2" style="width: 8px; height: 8px;"></span> Offline</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Device Info Table -->
+        <div class="col-lg-6">
+            <div class="card h-100 shadow-sm border-0" style="border-radius: 1rem;">
+                <div class="card-body p-4">
+                    <h6 class="text-muted small mb-3">Device Information Table</h6>
+                    <div class="table-responsive">
+                        <table class="table table-borderless table-hover align-middle">
+                            <thead style="background-color: #f0f7fb;">
+                                <tr>
+                                    <th class="py-2 rounded-start ps-3 text-muted small fw-bold">Device ID</th>
+                                    <th class="py-2 text-muted small fw-bold">Battery Level</th>
+                                    <th class="py-2 text-muted small fw-bold">Signal Strength</th>
+                                    <th class="py-2 text-muted small fw-bold">Device Status</th>
+                                    <th class="py-2 rounded-end text-muted small fw-bold">Last Update</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="ps-3">SS-001</td>
+                                    <td>87%</td>
+                                    <td>Strong</td>
+                                    <td>Online</td>
+                                    <td>2 mins ago</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

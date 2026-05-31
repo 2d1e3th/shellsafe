@@ -1,0 +1,198 @@
+{% extends "authority_base.html" %}
+
+{% block title %}Authority Dashboard{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="h2 mb-4">Authority Dashboard</h1>
+
+    <!-- Section 1: Current Algal Bloom Risk Status -->
+    <div class="card-group mb-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">Current Algal Bloom Risk Level</h5>
+                <p class="display-4 fw-bold">27%</p>
+                <p class="card-text">Status: <span class="fw-bold">Stable</span></p>
+                <span class="badge bg-success p-2">🟢 Low Risk</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 2: Real-Time Water Quality Monitoring -->
+    <div class="row mb-4">
+        <div class="col-md-4 col-xl-2 mb-3">
+            <div class="card h-100">
+                <div class="card-body d-flex align-items-center">
+                    <i class="bi bi-thermometer-half fs-1 text-primary me-3"></i>
+                    <div>
+                        <h6 class="card-subtitle mb-2 text-muted">Temperature</h6>
+                        <p class="card-text fs-4 fw-bold">25.2°C</p>
+                        <small class="text-muted">Normal: 20–30°C</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-xl-2 mb-3">
+            <div class="card h-100">
+                <div class="card-body d-flex align-items-center">
+                    <i class="bi bi-droplet-half fs-1 text-info me-3"></i>
+                    <div>
+                        <h6 class="card-subtitle mb-2 text-muted">pH Level</h6>
+                        <p class="card-text fs-4 fw-bold">6.8</p>
+                        <small class="text-muted">Normal: 6.5–8.5</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-xl-2 mb-3">
+            <div class="card h-100">
+                <div class="card-body d-flex align-items-center">
+                    <i class="bi bi-wind fs-1 text-success me-3"></i>
+                    <div>
+                        <h6 class="card-subtitle mb-2 text-muted">Dissolved Oxygen</h6>
+                        <p class="card-text fs-4 fw-bold">6.5 mg/L</p>
+                        <small class="text-muted">Normal: >5 mg/L</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-xl-2 mb-3">
+            <div class="card h-100">
+                <div class="card-body d-flex align-items-center">
+                    <i class="bi bi-moisture fs-1 text-warning me-3"></i>
+                    <div>
+                        <h6 class="card-subtitle mb-2 text-muted">Salinity</h6>
+                        <p class="card-text fs-4 fw-bold">32 ppt</p>
+                        <small class="text-muted">Normal: 30–35 ppt</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-xl-2 mb-3">
+            <div class="card h-100">
+                <div class="card-body d-flex align-items-center">
+                    <i class="bi bi-eye-slash-fill fs-1 text-secondary me-3"></i>
+                    <div>
+                        <h6 class="card-subtitle mb-2 text-muted">Turbidity</h6>
+                        <p class="card-text fs-4 fw-bold">38 NTU</p>
+                        <small class="text-muted">Normal: <50 NTU</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Section 3: Algal Bloom Risk Trend -->
+        <div class="col-lg-8 mb-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Temperature, pH & Bloom Risk Trends</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="riskTrendChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <!-- Section 4: Risk Distribution -->
+        <div class="col-lg-4 mb-4">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Risk Distribution</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="riskDistributionChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Risk Trend Chart
+    var riskTrendCtx = document.getElementById('riskTrendChart').getContext('2d');
+    var riskTrendChart = new Chart(riskTrendCtx, {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            datasets: [{
+                label: 'Temperature (°C)',
+                data: [22, 23, 24, 25, 25.2, 26, 27, 28, 27, 26, 24, 23],
+                borderColor: 'orange',
+                tension: 0.4,
+                fill: false
+            }, {
+                label: 'pH Level',
+                data: [7.2, 7.1, 7.3, 7.5, 6.8, 7.6, 7.7, 7.5, 7.4, 7.3, 7.2, 7.1],
+                borderColor: 'green',
+                tension: 0.4,
+                fill: false
+            }, {
+                label: 'Risk Score (%)',
+                data: [15, 18, 22, 25, 27, 30, 35, 33, 28, 24, 20, 18],
+                borderColor: 'red',
+                tension: 0.4,
+                fill: false
+            }, {
+                label: 'D.O (mg/L)',
+                data: [6.8, 6.7, 6.5, 6.6, 6.5, 6.4, 6.2, 6.3, 6.5, 6.7, 6.8, 6.9],
+                borderColor: 'blue',
+                tension: 0.4,
+                fill: false
+            }, {
+                label: 'Salinity (ppt)',
+                data: [31, 31.5, 32, 32.5, 32, 33, 33.5, 34, 33.5, 33, 32.5, 32],
+                borderColor: 'purple',
+                tension: 0.4,
+                fill: false
+            }, {
+                label: 'Turbidity (NTU)',
+                data: [35, 36, 37, 38, 38, 40, 42, 41, 39, 37, 36, 35],
+                borderColor: 'brown',
+                tension: 0.4,
+                fill: false
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            },
+            animation: {
+                duration: 1000
+            }
+        }
+    });
+
+    // Risk Distribution Chart
+    var riskDistributionCtx = document.getElementById('riskDistributionChart').getContext('2d');
+    var riskDistributionChart = new Chart(riskDistributionCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Low Risk', 'Moderate Risk', 'High Risk'],
+            datasets: [{
+                data: [65, 25, 10],
+                backgroundColor: ['#28a745', '#ffc107', '#dc3545']
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                }
+            }
+        }
+    });
+});
+</script>
+{% endblock %}

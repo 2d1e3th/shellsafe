@@ -1,0 +1,353 @@
+{% extends "dashboard_base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Dashboard Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="h4 mb-0">Algal Bloom Monitoring Dashboard</h2>
+            <p class="text-muted mb-0">Real-Time Coastal Water Monitoring System</p>
+        </div>
+        <div class="text-end">
+            <div class="card bg-danger text-white shadow-sm">
+                <div class="card-body p-2">
+                    <h6 class="card-title small mb-0">Current Risk Level</h6>
+                    <p class="card-text fw-bold mb-0">HIGH RISK</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sensor Charts Grid -->
+    <div class="row">
+        <!-- Temperature Chart -->
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title small text-muted">Temperature (°C)</h5>
+                    <div style="height: 250px;">
+                        <canvas id="tempChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- pH Level Chart -->
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title small text-muted">pH Level</h5>
+                    <div style="height: 250px;">
+                        <canvas id="phChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Salinity Chart -->
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title small text-muted">Salinity (ppt)</h5>
+                    <div style="height: 250px;">
+                        <canvas id="salinityChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Turbidity Chart -->
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title small text-muted">Turbidity (NTU)</h5>
+                    <div style="height: 250px;">
+                        <canvas id="turbidityChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Dissolved Oxygen Chart -->
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title small text-muted">Dissolved Oxygen (mg/L)</h5>
+                    <div style="height: 250px;">
+                        <canvas id="oxygenChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Overall Water Status -->
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body text-center d-flex flex-column justify-content-center">
+                    <h5 class="card-title small text-muted">Overall Water Status</h5>
+                    <div class="mx-auto my-3">
+                        <div class="risk-dial-high">
+                            <span class="risk-dial-label">Risk Level</span>
+                            <span class="risk-dial-value">HIGH</span>
+                        </div>
+                    </div>
+                    <p class="text-muted small">Water conditions indicate possible algal bloom formation.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sensor Summary Table -->
+    <div class="card">
+        <div class="card-header">
+            Sensor Summary Table (08:00 - 12:00)
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Temperature</th>
+                            <th>pH</th>
+                            <th>Salinity</th>
+                            <th>Turbidity</th>
+                            <th>Dissolved Oxygen (mg/L)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>08:00</td>
+                            <td>28 °C</td>
+                            <td>7.1</td>
+                            <td>31 ppt</td>
+                            <td>22 NTU</td>
+                            <td>7.5</td>
+                        </tr>
+                        <tr>
+                            <td>09:00</td>
+                            <td>29 °C</td>
+                            <td>7.3</td>
+                            <td>32 ppt</td>
+                            <td>25 NTU</td>
+                            <td>7.8</td>
+                        </tr>
+                        <tr>
+                            <td>10:00</td>
+                            <td>30 °C</td>
+                            <td>7.5</td>
+                            <td>33 ppt</td>
+                            <td>29 NTU</td>
+                            <td>8.2</td>
+                        </tr>
+                        <tr>
+                            <td>11:00</td>
+                            <td>31 °C</td>
+                            <td>7.8</td>
+                            <td>34 ppt</td>
+                            <td>35 NTU</td>
+                            <td>8.0</td>
+                        </tr>
+                        <tr>
+                            <td>12:00</td>
+                            <td>32 °C</td>
+                            <td>8</td>
+                            <td>35 ppt</td>
+                            <td>40 NTU</td>
+                            <td>7.8</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toxin and Risk Charts Grid -->
+    <div class="row mt-4">
+        <!-- Toxin Levels Chart -->
+        <div class="col-lg-6 mb-4">
+            <div class="card h-100" style="border-radius: 1rem; border: none; box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.05);">
+                <div class="card-body p-4">
+                    <h5 class="card-title fw-bold mb-4" style="color: #1a4f76;">
+                        <i class="bi bi-pie-chart-fill me-2" style="color: #154360;"></i>Toxin Levels
+                    </h5>
+                    <div style="height: 300px; position: relative;">
+                        <canvas id="toxinChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Risk Distribution Chart -->
+        <div class="col-lg-6 mb-4">
+            <div class="card h-100" style="border-radius: 1rem; border: none; box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.05);">
+                <div class="card-body p-4">
+                    <h5 class="card-title fw-bold mb-4" style="color: #1a4f76;">
+                        <i class="bi bi-pie-chart-fill me-2" style="color: #154360;"></i>Risk Distribution
+                    </h5>
+                    <div style="height: 300px; position: relative;">
+                        <canvas id="riskChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block styles %}
+<style>
+.risk-dial-high {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 8px solid #E74C3C;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(231, 76, 60, 0.1);
+}
+.risk-dial-label {
+    font-size: 0.8rem;
+    color: #E74C3C;
+}
+.risk-dial-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #E74C3C;
+}
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const chartLabels = ['08:00', '09:00', '10:00', '11:00', '12:00'];
+
+    const chartOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
+        scales: {
+            x: {
+                grid: {
+                    display: false
+                }
+            },
+            y: {
+                beginAtZero: false
+            }
+        },
+        elements: {
+            line: {
+                tension: 0.4
+            }
+        }
+    };
+
+    function createChart(ctx, data, borderColor, backgroundColor) {
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: chartLabels,
+                datasets: [{
+                    data: data,
+                    borderColor: borderColor,
+                    backgroundColor: backgroundColor,
+                    fill: true,
+                    pointRadius: 3,
+                    pointBackgroundColor: borderColor,
+                }]
+            },
+            options: chartOptions
+        });
+    }
+
+    // Temperature Chart
+    const tempCtx = document.getElementById('tempChart').getContext('2d');
+    createChart(tempCtx, [23, 25, 23, 20, 21], '#F39C12', 'rgba(243, 156, 18, 0.1)');
+
+    // pH Chart
+    const phCtx = document.getElementById('phChart').getContext('2d');
+    createChart(phCtx, [7.5, 7.6, 7.5, 7.4, 7.5], '#2ECC71', 'rgba(46, 204, 113, 0.1)');
+
+    // Salinity Chart
+    const salinityCtx = document.getElementById('salinityChart').getContext('2d');
+    createChart(salinityCtx, [32, 34, 36, 38, 39], '#3498DB', 'rgba(52, 152, 219, 0.1)');
+
+    // Turbidity Chart
+    const turbidityCtx = document.getElementById('turbidityChart').getContext('2d');
+    createChart(turbidityCtx, [35, 15, 10, 40, 75], '#1ABC9C', 'rgba(26, 188, 156, 0.1)');
+
+    // Dissolved Oxygen Chart
+    const oxygenCtx = document.getElementById('oxygenChart').getContext('2d');
+    createChart(oxygenCtx, [7.5, 8.2, 8.5, 8.0, 7.8], '#9B59B6', 'rgba(155, 89, 182, 0.1)');
+
+    // Toxin Levels Doughnut Chart
+    const toxinCtx = document.getElementById('toxinChart').getContext('2d');
+    new Chart(toxinCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Low Toxin (54%)', 'Moderate Toxin (32%)', 'High Toxin (14%)'],
+            datasets: [{
+                data: [54, 32, 14],
+                backgroundColor: ['#4DA2D6', '#9FD2F1', '#1C618A'], // Matched colors based on image breakdown
+                borderWidth: 2,
+                borderColor: '#ffffff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '60%',
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        usePointStyle: true,
+                        padding: 20,
+                        boxWidth: 10,
+                        color: '#6c757d'
+                    }
+                }
+            }
+        }
+    });
+
+    // Risk Distribution Doughnut Chart
+    const riskCtx = document.getElementById('riskChart').getContext('2d');
+    new Chart(riskCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Low Risk (58%)', 'Moderate (28%)', 'High (14%)'],
+            datasets: [{
+                data: [58, 28, 14],
+                backgroundColor: ['#23C268', '#F39C12', '#F93939'], // Matched standard Red/Orange/Green
+                borderWidth: 2,
+                borderColor: '#ffffff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '60%',
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                        usePointStyle: true,
+                        padding: 20,
+                        boxWidth: 10,
+                        color: '#6c757d'
+                    }
+                }
+            }
+        }
+    });
+});
+</script>
+{% endblock %}
+
+
+
+
+
